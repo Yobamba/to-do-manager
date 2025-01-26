@@ -1,0 +1,6 @@
+.Done p.draggable {
+    text-decoration: line-through;
+    color: #888;
+    background-color: #f0f0f0;
+    opacity: 0.7;
+  }

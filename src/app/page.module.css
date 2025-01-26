@@ -1,0 +1,347 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.Done p.draggable {
+  text-decoration: line-through;
+  color: #888;
+  background-color: #f0f0f0;
+  opacity: 0.7;
+}
+
+.Doing p.draggable {
+  background-color: lightsteelblue;
+}
+
+.Done p {
+  text-decoration: line-through;
+  color: black;
+  background-color: #f0f0f0;
+  opacity: 0.7;
+}
+
+/* Container and scrollable content styles */
+.container {
+  background-color: #2D9596;
+  padding: 1rem;
+  margin: 10px;
+  border-radius: 10px;
+  min-width: 270px;
+  height: 450px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.taskContent {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  /* Customize scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.5) transparent;
+}
+
+/* Webkit scrollbar customization */
+.taskContent::-webkit-scrollbar {
+  width: 6px;
+}
+
+.taskContent::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.taskContent::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 3px;
+}
+
+/* Task heading styles */
+.taskHeading {
+  color: white;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+/* Draggable task styles */
+.draggable {
+  margin: 0.5rem 0;
+  padding: 1rem;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 5px;
+  cursor: move;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Keep the header (h4) fixed at the top */
+.container h4 {
+  position: sticky;
+  top: 0;
+  margin-bottom: 1rem;
+  color: white;
+  font-size: 1.5rem;
+}
+
+  .formCSS {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.inputArea {
+  padding: 5px;
+  margin: 5px;
+  min-width: 65px;
+  border-radius: 5px;
+}
+
+.inputArea2 {
+  padding: 5px;
+  margin: 5px;
+  min-width: 65px;
+  border-radius: 5px;
+}
+
+/* Add specific style for clear button */
+.container button.inputArea {
+  width: 80px;
+  margin: 5px auto;
+  display: block;
+}
+
+button.inputArea {
+  margin: 15px;
+}
+
+
+  .newTaskContainer {
+    background-color: #265073;
+    padding: 1rem;
+    border-radius: 10px;
+    min-width: 200px;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    max-height: 180px;
+  }
+
+  .newTaskContainer2 {
+    background-color: #265073;
+    padding: 1rem;
+    border-radius: 10px;
+    min-width: 100px;
+    margin: 40px;
+    display: flex;
+    flex-direction: column;
+    max-height: 180px;
+  }
+
+
+
+  .taskHeading1 {
+    color: white;
+    margin-bottom: 5px;
+  }
+
+  .taskHeading {
+    color: black;
+    margin-bottom: 5px;
+  }
+
+  .doingp {
+    background-color: red;
+  }
+  
+  .draggable {
+    padding: 1rem;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    cursor: move;
+    width: 100%;
+  }
+
+  .draggable.dragging {
+    opacity: .5;
+  }
+
+  .intro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 15px;
+  }
+
+  .buttonsIcon {
+    /* width: 20px; Adjust the width and height based on your design */
+    /* height: 20px; */
+    background-color: #3498db; /* Change the background color to your preference */
+    border-radius: 50%; /* Create a circular shape */
+    cursor: pointer; /* Change the cursor to indicate it's clickable */
+    position: absolute; /* Position it absolutely within the task container */
+    top: 5px; /* Adjust the top and right values for positioning */
+    right: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff; /* Set the color of the icon */
+  }
+
+  .visible {
+    display: block; /* or any other style to make it visible */
+  }
+
+  .hidden {
+    display: none !important; /* hide the buttons initially */
+  }
+  
+  .buttonsContainer {
+    display: none; /* initially hide the buttons container */
+    /* additional styling for the buttons container */
+  }
+
+
+
+/* Navbar Start */
+/* styles/navbar.module.css */
+.navbar {
+  background-color: #265073; /* Set your primary background color */
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding: 1.5rem;
+
+}
+
+.navList {
+  list-style: none; /* Remove default list-style (bullet points) */
+  padding: 0; /* Remove default padding */
+  margin: 0; /* Remove default margin */
+  display: flex;
+  visibility: hidden;
+
+}
+
+.navList li {
+  margin-right: 20px; /* Add spacing between the navbar items */
+}
+
+.navList a {
+  text-decoration: none;
+  color: #E7DAE1; /* Set your secondary text color */
+  transition: color 0.3s ease; /* Add a smooth transition for color changes */
+}
+
+.navList a:hover {
+  background-color: #fff; /* Change text color on hover */
+  color: black;
+  padding: 5px;
+ 
+}
+
+.navList a.active {
+  font-weight: bold; /* Make the active link bold */
+  color: #fff; /* Set the active link text color */
+}
+
+/* Navbar Finish */
+
+.grid {
+  display: flex;
+  flex-direction: row;
+  max-width: 100%;
+  width: var(--max-width);
+  justify-content: space-between;
+}
+
+.card {
+  padding: 1rem 1.2rem;
+  border-radius: var(--border-radius);
+  background: rgba(var(--card-rgb), 0);
+  border: 1px solid rgba(var(--card-border-rgb), 0);
+  transition: background 200ms, border 200ms;
+}
+
+.card span {
+  display: inline-block;
+  transition: transform 200ms;
+}
+
+.card h2 {
+  font-weight: 600;
+  margin-bottom: 0.7rem;
+}
+/* Enable hover only on non-touch devices */
+@media (hover: hover) and (pointer: fine) {
+  .card:hover {
+    background: rgba(var(--card-rgb), 0.1);
+    border: 1px solid rgba(var(--card-border-rgb), 0.15);
+  }
+
+  .card:hover span {
+    transform: translateX(4px);
+  }
+}
+
+@media (prefers-reduced-motion) {
+  .card:hover span {
+    transform: none;
+  }
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+
+  .grid {
+    grid-template-columns: 1fr;
+    margin-bottom: 120px;
+    overflow-x: auto;
+    
+  }
+
+  .card {
+    padding: 1rem 2.5rem;
+  }
+
+  .card h2 {
+    margin-bottom: 0.5rem;
+  }
+
+  .scrollableContainer {
+    overflow-x: auto;
+    white-space: nowrap; /* Prevents text wrapping to the next line */
+  }
+
+  .navList {
+    position: fixed;
+  }
+
+  .navbar {
+    justify-content: flex-start;
+    
+  
+  }
+
+  .main {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+}
+
+/* Tablet and Smaller Desktop */
+@media (min-width: 701px) and (max-width: 1120px) {
+  .grid {
+    grid-template-columns: repeat(2, 50%);
+  }
+}

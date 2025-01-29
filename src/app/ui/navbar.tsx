@@ -1,10 +1,13 @@
 // components/Navbar.js
+'use client';
+
 import Link from 'next/link';
 import styles from "../page.module.css";
+import ModeToggle from './ModeToggle';
 
 const Navbar = () => {
   return (
-    <nav >
+    <nav className={styles.navbar}>
       <ul className={styles.navList}>
         <li>
           <Link href="/">
@@ -15,6 +18,9 @@ const Navbar = () => {
           <Link href="/account">
             Account
           </Link>
+        </li>
+        <li className={styles.modeToggleItem}>
+          <ModeToggle />
         </li>
       </ul>
     </nav>

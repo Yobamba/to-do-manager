@@ -1,0 +1,18 @@
+.syncButton {
+  position: fixed;
+  top: 75px;
+  right: 20px;
+  font-size: 0.75rem;
+  padding: 4px 8px;
+  background-color: #5C8374;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.syncButton:hover {
+  background-color: #7BA696;
+}

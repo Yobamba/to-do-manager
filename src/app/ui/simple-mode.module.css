@@ -1,0 +1,61 @@
+.container {
+  background: #5C8374;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 10px;
+  flex: 1;
+  min-width: 300px;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.taskList {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  margin-top: 16px;
+  max-height: calc(100% - 60px);
+}
+
+/* Custom scrollbar styles */
+.taskList::-webkit-scrollbar {
+  width: 8px;
+}
+
+.taskList::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.taskList::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+.taskList::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.title {
+  color: white;
+  margin: 0;
+  padding-bottom: 16px;
+  font-size: 1.5rem;
+}
+
+.task {
+  background: white;
+  padding: 12px;
+  margin-bottom: 8px;
+  border-radius: 4px;
+  cursor: move;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.task:last-child {
+  margin-bottom: 0;
+}

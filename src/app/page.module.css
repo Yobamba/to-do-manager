@@ -1,3 +1,105 @@
+.board {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  min-height: calc(100vh - 60px);
+  background-color: #1B4242;
+}
+
+.column {
+  background-color: #5C8374;
+  padding: 1rem;
+  border-radius: 10px;
+  min-width: 270px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 450px;
+}
+
+.columnHeader {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+.columnContent {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+}
+
+/* Webkit scrollbar customization */
+.columnContent::-webkit-scrollbar {
+  width: 8px;
+}
+
+.columnContent::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.columnContent::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+.columnContent::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.task {
+  background-color: white;
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: 5px;
+  cursor: grab;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.task:active {
+  cursor: grabbing;
+}
+
+.taskText {
+  margin-bottom: 0.5rem;
+  word-break: break-word;
+}
+
+.dueDate {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.controls {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem;
+}
+
+.syncButton {
+  position: fixed;
+  top: 75px;
+  right: 20px;
+  font-size: 0.75rem;
+  padding: 4px 8px;
+  background-color: #5C8374;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.syncButton:hover {
+  background-color: #7BA696;
+}
+
 .main {
   display: flex;
   flex-direction: column;
@@ -25,39 +127,53 @@
 
 /* Container and scrollable content styles */
 .container {
-  background-color: #2D9596;
-  padding: 1rem;
+  background: #5C8374;
+  border-radius: 12px;
+  padding: 20px;
   margin: 10px;
-  border-radius: 10px;
-  min-width: 270px;
-  height: 450px;
+  flex: 1;
+  min-width: 300px;
+  height: 600px;
   display: flex;
   flex-direction: column;
   position: relative;
 }
 
-.taskContent {
+.container .taskContent {
   flex: 1;
   overflow-y: auto;
-  padding: 0.5rem;
-  margin-top: 0.5rem;
-  /* Customize scrollbar */
-  scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.5) transparent;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  margin-top: 16px;
+  max-height: calc(100% - 60px);
 }
 
-/* Webkit scrollbar customization */
-.taskContent::-webkit-scrollbar {
-  width: 6px;
+/* Custom scrollbar styles for simple mode */
+.container .taskContent::-webkit-scrollbar {
+  width: 8px;
 }
 
-.taskContent::-webkit-scrollbar-track {
-  background: transparent;
+.container .taskContent::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
 }
 
-.taskContent::-webkit-scrollbar-thumb {
-  background-color: rgba(255, 255, 255, 0.5);
-  border-radius: 3px;
+.container .taskContent::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+.container .taskContent::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.container h2 {
+  color: #fff;
+  margin: 0;
+  padding-bottom: 16px;
+  font-size: 1.5rem;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
 }
 
 /* Task heading styles */
@@ -211,56 +327,124 @@ button.inputArea {
 
 
 
-/* Navbar Start */
-/* styles/navbar.module.css */
-.navbar {
-  background-color: #265073; /* Set your primary background color */
-  width: 100%;
+/* Mode Toggle Styles */
+.modeToggleContainer {
   display: flex;
-  justify-content: flex-end;
-  padding: 1.5rem;
+  align-items: center;
+}
 
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 100px;
+  height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #9EC8B9;
+  transition: .4s;
+  border-radius: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #1B4242;
+}
+
+input:checked + .slider:before {
+  transform: translateX(65px);
+}
+
+.modeLabel {
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  pointer-events: none;
+}
+
+/* Navbar Styles */
+.navbar {
+  width: 100%;
+  padding: 1rem 2rem;
+  background-color: #092635;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
 .navList {
-  list-style: none; /* Remove default list-style (bullet points) */
-  padding: 0; /* Remove default padding */
-  margin: 0; /* Remove default margin */
   display: flex;
-  visibility: hidden;
-
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+  justify-content: flex-end;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .navList li {
-  margin-right: 20px; /* Add spacing between the navbar items */
+  margin-right: 2rem;
+}
+
+.navList li:last-child {
+  margin-right: 0;
 }
 
 .navList a {
+  color: white;
   text-decoration: none;
-  color: #E7DAE1; /* Set your secondary text color */
-  transition: color 0.3s ease; /* Add a smooth transition for color changes */
+  font-weight: 500;
+  font-size: 1rem;
 }
 
 .navList a:hover {
-  background-color: #fff; /* Change text color on hover */
-  color: black;
-  padding: 5px;
- 
+  color: #9EC8B9;
 }
 
-.navList a.active {
-  font-weight: bold; /* Make the active link bold */
-  color: #fff; /* Set the active link text color */
+/* Tablet and Smaller Desktop */
+@media (min-width: 701px) and (max-width: 1120px) {
+  .grid {
+    grid-template-columns: repeat(2, 50%);
+  }
 }
-
-/* Navbar Finish */
 
 .grid {
   display: flex;
-  flex-direction: row;
-  max-width: 100%;
-  width: var(--max-width);
-  justify-content: space-between;
+  gap: 20px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .card {
@@ -339,9 +523,168 @@ button.inputArea {
   
 }
 
-/* Tablet and Smaller Desktop */
-@media (min-width: 701px) and (max-width: 1120px) {
-  .grid {
-    grid-template-columns: repeat(2, 50%);
-  }
+/* Calendar Mode Styles */
+.calendarMode {
+  width: 100%;
+  max-width: var(--max-width);
+  padding: 1rem;
+}
+
+.calendarControls {
+  display: flex;
+  justify-content: flex-end;
+  padding: 16px;
+}
+
+.calendarContainer {
+  position: relative;
+  min-height: calc(100vh - 60px);
+  background-color: #1B4242;
+  padding: 20px;
+}
+
+.calendarTask {
+  background: #fff;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 8px 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: grab;
+  transition: all 0.2s ease;
+}
+
+.calendarTask:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.calendarTask:active {
+  cursor: grabbing;
+}
+
+.calendarTask p {
+  margin: 0 0 8px 0;
+  font-size: 1rem;
+  color: #1B4242;
+  font-weight: 500;
+}
+
+.dueDate {
+  font-size: 0.85rem;
+  color: #666;
+  display: block;
+}
+
+.calendarLoading,
+.calendarError,
+.calendarAuth {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  text-align: center;
+  padding: 2rem;
+}
+
+.authButton {
+  background-color: #4285f4;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 1rem;
+  transition: background-color 0.3s;
+}
+
+.authButton:hover {
+  background-color: #3367d6;
+}
+
+/* Auth Styles */
+.authContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.authCard {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+}
+
+.authCard h1 {
+  color: #1B4242;
+  margin-bottom: 1rem;
+}
+
+.authCard p {
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+/* Google Sign In Button Styles */
+.googleButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background-color: #fff;
+  border: 1px solid #dadce0;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  color: #3c4043;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  min-width: 200px;
+}
+
+.googleButton:hover {
+  background-color: #f8f9fa;
+  border-color: #dadce0;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+}
+
+.buttonText {
+  margin-left: 8px;
+}
+
+.calendarAuth {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  text-align: center;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  max-width: 400px;
+  margin: 2rem auto;
+}
+
+.calendarAuth h2 {
+  color: #1B4242;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.calendarAuth p {
+  color: #666;
+  margin-bottom: 2rem;
+  line-height: 1.5;
 }

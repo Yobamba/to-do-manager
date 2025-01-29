@@ -10,6 +10,8 @@ export interface CalendarEvent {
     timeZone: string;
   };
   status: string;
+  backgroundColor?: string;
+  foregroundColor?: string;
 }
 
 export interface CalendarTask {
@@ -19,6 +21,8 @@ export interface CalendarTask {
   dueDate: string;
   eventId: string;
   calendarId: string;
+  backgroundColor?: string;
+  foregroundColor?: string;
 }
 
 export async function initializeGoogleCalendarApi() {
@@ -50,7 +54,9 @@ export async function convertEventToTask(event: CalendarEvent): Promise<Calendar
     status: 'To_Do',
     dueDate: event.end.dateTime,
     eventId: event.id,
-    calendarId: 'primary'
+    calendarId: 'primary',
+    backgroundColor: event.backgroundColor,
+    foregroundColor: event.foregroundColor
   };
 }
 

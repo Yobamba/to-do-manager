@@ -88,6 +88,31 @@ export default function CalendarMode() {
     storeCalendarTasks(updatedTasks);
   };
 
+  const renderTask = (task: CalendarTask, index: number) => (
+    <Draggable key={task.id} draggableId={task.id} index={index}>
+      {(provided) => (
+        <div
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          className={styles.task}
+          style={{
+            ...provided.draggableProps.style,
+            backgroundColor: task.backgroundColor || '#265073',
+            color: task.foregroundColor || '#FFFFFF',
+          }}
+        >
+          <div className={styles.taskText}>{task.text}</div>
+          {task.dueDate && (
+            <div className={styles.dueDate} style={{ color: task.foregroundColor || '#FFFFFF' }}>
+              Due: {new Date(task.dueDate).toLocaleString()}
+            </div>
+          )}
+        </div>
+      )}
+    </Draggable>
+  );
+
   if (status === 'loading' || loading) {
     return <div className={styles.loading}>Loading calendar...</div>;
   }
@@ -132,23 +157,7 @@ export default function CalendarMode() {
                 >
                   {tasks
                     .filter(task => task.status === 'To_Do')
-                    .map((task, index) => (
-                      <Draggable key={task.id} draggableId={task.id} index={index}>
-                        {(provided) => (
-                          <div
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                            className={styles.task}
-                          >
-                            <div className={styles.taskText}>{task.text}</div>
-                            <div className={styles.dueDate}>
-                              Due: {new Date(task.dueDate).toLocaleDateString()}
-                            </div>
-                          </div>
-                        )}
-                      </Draggable>
-                    ))}
+                    .map((task, index) => renderTask(task, index))}
                   {provided.placeholder}
                 </div>
               )}
@@ -165,23 +174,7 @@ export default function CalendarMode() {
                 >
                   {tasks
                     .filter(task => task.status === 'Doing')
-                    .map((task, index) => (
-                      <Draggable key={task.id} draggableId={task.id} index={index}>
-                        {(provided) => (
-                          <div
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                            className={styles.task}
-                          >
-                            <div className={styles.taskText}>{task.text}</div>
-                            <div className={styles.dueDate}>
-                              Due: {new Date(task.dueDate).toLocaleDateString()}
-                            </div>
-                          </div>
-                        )}
-                      </Draggable>
-                    ))}
+                    .map((task, index) => renderTask(task, index))}
                   {provided.placeholder}
                 </div>
               )}
@@ -198,23 +191,7 @@ export default function CalendarMode() {
                 >
                   {tasks
                     .filter(task => task.status === 'Done')
-                    .map((task, index) => (
-                      <Draggable key={task.id} draggableId={task.id} index={index}>
-                        {(provided) => (
-                          <div
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                            className={styles.task}
-                          >
-                            <div className={styles.taskText}>{task.text}</div>
-                            <div className={styles.dueDate}>
-                              Due: {new Date(task.dueDate).toLocaleDateString()}
-                            </div>
-                          </div>
-                        )}
-                      </Draggable>
-                    ))}
+                    .map((task, index) => renderTask(task, index))}
                   {provided.placeholder}
                 </div>
               )}

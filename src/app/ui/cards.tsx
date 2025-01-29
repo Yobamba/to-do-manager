@@ -15,26 +15,21 @@ export default function Cards() {
     const allTasks = document.querySelectorAll(".draggable");
     const tasksData: { text: string | null; status: string; }[] = [];
 
-    console.log("Starting saveTasksToLocalStorage");
-    console.log("Number of tasks found:", allTasks.length);
-
     allTasks.forEach((task, index) => {
       // Find which container this task is in
       const containerDiv = task.closest('.container');
       let status = 'To_Do'; // default status
       
       if (containerDiv) {
-        console.log(`Task ${index} container classes:`, containerDiv.className);
-        if (containerDiv.classList.contains('Doing')) {
+        // More robust container detection using contains instead of exact matches
+        const containerClasses = containerDiv.className.toLowerCase();
+        if (containerClasses.includes('doing')) {
           status = 'Doing';
-        } else if (containerDiv.classList.contains('Done')) {
+        } else if (containerClasses.includes('done')) {
           status = 'Done';
-        } else if (containerDiv.classList.contains('To_Do')) {
+        } else if (containerClasses.includes('to_do')) {
           status = 'To_Do';
         }
-        console.log(`Task ${index} assigned status:`, status);
-      } else {
-        console.warn(`Task ${index} has no container!`);
       }
       
       tasksData.push({
@@ -43,51 +38,61 @@ export default function Cards() {
       });
     });
 
-    console.log("Final tasksData:", tasksData);
-    localStorage.setItem("tasks", JSON.stringify(tasksData));
+    // Save with a small delay to ensure DOM is updated
+    setTimeout(() => {
+      localStorage.setItem("tasks", JSON.stringify(tasksData));
+      applyTaskStyles(); // Apply styles after saving
+    }, 50);
+  };
 
-    // Apply styles based on container
-    const containerDoing = document.querySelector(`.container.Doing .${styles.taskContent}`);
-    const containerToDo = document.querySelector(`.container.container1.To_Do .${styles.taskContent}`);
-    const containerDone = document.querySelector(`.container.Done .${styles.taskContent}`);
+  // Separate function for applying styles to improve maintainability
+  const applyTaskStyles = () => {
+    const containers = {
+      doing: document.querySelector(`.container.Doing .${styles.taskContent}`),
+      todo: document.querySelector(`.container.container1.To_Do .${styles.taskContent}`),
+      done: document.querySelector(`.container.Done .${styles.taskContent}`)
+    };
 
-    if (containerDoing) {
-      const doingParagraphs = containerDoing.querySelectorAll("p");
+    const baseStyles = {
+      padding: "1rem",
+      border: "1px solid black",
+      borderRadius: "5px",
+      cursor: "move",
+      width: "100%"
+    };
+
+    if (containers.doing) {
+      const doingParagraphs = containers.doing.querySelectorAll("p");
       doingParagraphs.forEach(paragraph => {
-        paragraph.style.padding = "1rem";
-        paragraph.style.textDecoration = 'unset';
-        paragraph.style.opacity = '1';
-        paragraph.style.color = 'black';
-        paragraph.style.backgroundColor = "lightsteelblue";
-        paragraph.style.border = "1px solid black";
-        paragraph.style.borderRadius = "5px";
-        paragraph.style.cursor = "move";
-        paragraph.style.width = "100%";
+        Object.assign(paragraph.style, baseStyles, {
+          textDecoration: 'unset',
+          opacity: '1',
+          color: 'black',
+          backgroundColor: "lightsteelblue"
+        });
       });
     }
 
-    if (containerToDo) {
-      const todoParagraphs = containerToDo.querySelectorAll("p");
+    if (containers.todo) {
+      const todoParagraphs = containers.todo.querySelectorAll("p");
       todoParagraphs.forEach(paragraph => {
-        paragraph.style.padding = "1rem";
-        paragraph.style.textDecoration = 'unset';
-        paragraph.style.opacity = '1';
-        paragraph.style.color = 'black';
-        paragraph.style.backgroundColor = "white";
-        paragraph.style.border = "1px solid black";
-        paragraph.style.borderRadius = "5px";
-        paragraph.style.cursor = "move";
-        paragraph.style.width = "100%";
+        Object.assign(paragraph.style, baseStyles, {
+          textDecoration: 'unset',
+          opacity: '1',
+          color: 'black',
+          backgroundColor: "white"
+        });
       });
     }
 
-    if (containerDone) {
-      const doneParagraphs = containerDone.querySelectorAll("p");
+    if (containers.done) {
+      const doneParagraphs = containers.done.querySelectorAll("p");
       doneParagraphs.forEach(paragraph => {
-        paragraph.style.textDecoration = 'line-through';
-        paragraph.style.backgroundColor = '#f0f0f0';
-        paragraph.style.opacity = '0.7';
-        paragraph.classList.add('done-style');
+        Object.assign(paragraph.style, baseStyles, {
+          textDecoration: 'line-through',
+          backgroundColor: '#f0f0f0',
+          opacity: '0.7'
+        });
       });
     }
   };

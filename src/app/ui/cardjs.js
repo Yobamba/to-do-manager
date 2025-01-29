@@ -3,21 +3,34 @@ import styles from "../page.module.css";
 
 export function initializeDraggable(saveTasksToLocalStorage) {
   let draggedItem = null;
+  let isDragging = false;
 
-  // First, remove any existing event listeners
-  const oldDraggables = document.querySelectorAll(".draggable");
-  const oldContainers = document.querySelectorAll(`.${styles.taskContent}`);
+  // Store event listeners for cleanup
+  const eventListeners = new WeakMap();
 
-  oldDraggables.forEach(draggable => {
-    draggable.replaceWith(draggable.cloneNode(true));
-  });
+  function removeOldEventListeners(element) {
+    const listeners = eventListeners.get(element);
+    if (listeners) {
+      listeners.forEach(({ event, handler }) => {
+        element.removeEventListener(event, handler);
+      });
+      eventListeners.delete(element);
+    }
+  }
 
-  oldContainers.forEach(container => {
-    const newContainer = container.cloneNode(true);
-    container.parentNode.replaceChild(newContainer, container);
-  });
+  function addEventListenerWithCleanup(element, event, handler) {
+    if (!eventListeners.has(element)) {
+      eventListeners.set(element, []);
+    }
+    eventListeners.get(element).push({ event, handler });
+    element.addEventListener(event, handler);
+  }
 
-  // Now add fresh event listeners
+  // Clean up old event listeners
+  document.querySelectorAll(".draggable").forEach(removeOldEventListeners);
+  document.querySelectorAll(`.${styles.taskContent}`).forEach(removeOldEventListeners);
+
+  // Add new event listeners
   const draggables = document.querySelectorAll(".draggable");
   const containers = document.querySelectorAll(`.${styles.taskContent}`);
 
@@ -60,58 +73,73 @@ export function initializeDraggable(saveTasksToLocalStorage) {
   }
 
   draggables.forEach(draggable => {
-    draggable.addEventListener("dragstart", (e) => {
+    const dragStartHandler = (e) => {
+      if (isDragging) return;
+      isDragging = true;
       draggedItem = draggable;
       e.dataTransfer.effectAllowed = "move";
-      setTimeout(() => {
+      requestAnimationFrame(() => {
         draggable.classList.add("dragging");
-      }, 0);
-    });
+      });
+    };
 
-    draggable.addEventListener("dragend", () => {
+    const dragEndHandler = () => {
+      if (!isDragging) return;
+      isDragging = false;
       draggedItem.classList.remove("dragging");
-      updateTaskStyles(); // Update styles after drag
-      if (saveTasksToLocalStorage) {
-        saveTasksToLocalStorage();
+      
+      // Ensure we're in the correct container
+      const container = draggedItem.closest(`.${styles.taskContent}`);
+      if (container) {
+        // Wait for DOM to settle before saving
+        requestAnimationFrame(() => {
+          if (saveTasksToLocalStorage) {
+            saveTasksToLocalStorage();
+          }
+        });
       }
       draggedItem = null;
-    });
+      updateTaskStyles(); // Update styles after drag
+    };
+
+    addEventListenerWithCleanup(draggable, "dragstart", dragStartHandler);
+    addEventListenerWithCleanup(draggable, "dragend", dragEndHandler);
   });
 
   containers.forEach(container => {
-    container.addEventListener("dragover", e => {
+    const dragOverHandler = (e) => {
       e.preventDefault();
       e.dataTransfer.dropEffect = "move";
+      if (!isDragging || !draggedItem) return;
+
       const afterElement = getDragAfterElement(container, e.clientY);
       const draggable = document.querySelector(".dragging");
-      if (draggable) {
+      
+      if (draggable && container !== draggable.parentElement) {
         if (afterElement == null) {
           container.appendChild(draggable);
         } else {
           container.insertBefore(draggable, afterElement);
         }
       }
-    });
+    };
 
-    container.addEventListener("dragenter", e => {
-      e.preventDefault();
-    });
-
-    container.addEventListener("drop", e => {
+    const dropHandler = (e) => {
       e.preventDefault();
       const draggable = document.querySelector(".dragging");
-      if (draggable) {
-        if (getDragAfterElement(container, e.clientY) === null) {
-          container.appendChild(draggable);
-        } else {
-          container.insertBefore(draggable, getDragAfterElement(container, e.clientY));
-        }
-        updateTaskStyles(); // Update styles after drop
-        if (saveTasksToLocalStorage) {
-          saveTasksToLocalStorage();
-        }
+      if (draggable && container !== draggable.parentElement) {
+        requestAnimationFrame(() => {
+          if (saveTasksToLocalStorage) {
+            saveTasksToLocalStorage();
+          }
+        });
       }
-    });
+      updateTaskStyles(); // Update styles after drop
+    };
+
+    addEventListenerWithCleanup(container, "dragover", dragOverHandler);
+    addEventListenerWithCleanup(container, "dragenter", (e) => e.preventDefault());
+    addEventListenerWithCleanup(container, "drop", dropHandler);
   });
 
   // Update styles initially

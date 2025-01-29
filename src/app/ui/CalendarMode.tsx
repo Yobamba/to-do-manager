@@ -10,7 +10,8 @@ import {
   convertEventToTask,
   storeCalendarTasks,
   getStoredCalendarTasks,
-  CalendarTask
+  CalendarTask,
+  mergeTasks
 } from '../utils/googleCalendar';
 
 function GoogleIcon() {
@@ -29,12 +30,19 @@ export default function CalendarMode() {
   const [tasks, setTasks] = useState<CalendarTask[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isSyncing, setIsSyncing] = useState(false);
 
+  // Load tasks from localStorage on mount
   useEffect(() => {
-    if (session) {
+    const storedTasks = getStoredCalendarTasks();
+    setTasks(storedTasks);
+    setLoading(false);
+  }, []);
+
+  // Sync with Google Calendar when session is available
+  useEffect(() => {
+    if (session && !isSyncing) {
       syncCalendarEvents();
-    } else {
-      setLoading(false);
     }
   }, [session]);
 
@@ -51,27 +59,26 @@ export default function CalendarMode() {
   };
 
   const syncCalendarEvents = async () => {
+    if (isSyncing) return;
+    
     try {
-      setLoading(true);
+      setIsSyncing(true);
+      setError(null);
+      
       const events = await fetchCalendarEvents();
       const newTasks = await Promise.all(events.map(convertEventToTask));
       const existingTasks = getStoredCalendarTasks();
       
-      // Merge new tasks with existing ones, avoiding duplicates
-      const mergedTasks = [...existingTasks];
-      newTasks.forEach(newTask => {
-        const existingIndex = mergedTasks.findIndex(t => t.eventId === newTask.eventId);
-        if (existingIndex === -1) {
-          mergedTasks.push(newTask);
-        }
-      });
-
+      // Use the new mergeTasks function
+      const mergedTasks = mergeTasks(existingTasks, newTasks);
+      
       setTasks(mergedTasks);
       storeCalendarTasks(mergedTasks);
     } catch (err) {
+      console.error('Sync error:', err);
       setError('Failed to sync calendar events');
     } finally {
-      setLoading(false);
+      setIsSyncing(false);
     }
   };
 
@@ -79,23 +86,58 @@ export default function CalendarMode() {
     if (!result.destination) return;
 
     const { source, destination } = result;
-    const updatedTasks = Array.from(tasks);
-    const [movedTask] = updatedTasks.splice(source.index, 1);
-    movedTask.status = destination.droppableId;
-    updatedTasks.splice(destination.index, 0, movedTask);
     
-    setTasks(updatedTasks);
-    storeCalendarTasks(updatedTasks);
+    // Get tasks in their respective columns
+    const tasksInSourceStatus = tasks.filter(t => t.status === source.droppableId);
+    const sourceTask = tasksInSourceStatus[source.index];
+    
+    if (!sourceTask) return;
+
+    // Create a new array without the dragged task
+    const updatedTasks = tasks.filter(t => t.id !== sourceTask.id);
+    
+    // Find tasks in the destination column
+    const tasksInDestStatus = updatedTasks.filter(t => t.status === destination.droppableId);
+    
+    // Calculate the position to insert the task
+    let insertPosition;
+    if (destination.index === 0) {
+      insertPosition = 0;
+    } else if (destination.index >= tasksInDestStatus.length) {
+      insertPosition = updatedTasks.length;
+    } else {
+      const targetTask = tasksInDestStatus[destination.index];
+      insertPosition = updatedTasks.findIndex(t => t.id === targetTask.id);
+    }
+
+    // Create the updated task with new status and timestamp
+    const updatedTask = {
+      ...sourceTask,
+      status: destination.droppableId,
+      lastUpdated: Date.now()
+    };
+
+    // Insert the task at the calculated position
+    updatedTasks.splice(insertPosition, 0, updatedTask);
+
+    // Update positions for all tasks
+    const finalTasks = updatedTasks.map((task, index) => ({
+      ...task,
+      position: index
+    }));
+
+    setTasks(finalTasks);
+    storeCalendarTasks(finalTasks);
   };
 
   const renderTask = (task: CalendarTask, index: number) => (
     <Draggable key={task.id} draggableId={task.id} index={index}>
-      {(provided) => (
+      {(provided, snapshot) => (
         <div
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          className={styles.task}
+          className={`${styles.task} ${snapshot.isDragging ? styles.dragging : ''}`}
           style={{
             ...provided.draggableProps.style,
             backgroundColor: task.backgroundColor || '#265073',
@@ -113,24 +155,15 @@ export default function CalendarMode() {
     </Draggable>
   );
 
-  if (status === 'loading' || loading) {
-    return <div className={styles.loading}>Loading calendar...</div>;
-  }
-
-  if (error) {
-    return (
-      <div className={styles.error}>
-        <p>{error}</p>
-        <button onClick={syncCalendarEvents}>Retry</button>
-      </div>
-    );
+  if (status === 'loading') {
+    return <div className={styles.loading}>Loading authentication...</div>;
   }
 
   if (!session) {
     return (
       <div className={styles.auth}>
         <h2>Connect to Google Calendar</h2>
-        <p>To view and manage your calendar events as tasks, please connect your Google Calendar account. Your data will be kept private and secure.</p>
+        <p>To view and manage your calendar events as tasks, please connect your Google Calendar account.</p>
         <button onClick={handleSignIn} className={styles.googleButton}>
           <GoogleIcon />
           <span className={styles.buttonText}>Sign in with Google</span>
@@ -141,62 +174,44 @@ export default function CalendarMode() {
 
   return (
     <div className={styles.calendarContainer}>
-      <button onClick={syncCalendarEvents} className={styles.syncButton}>
-        Sync
-      </button>
+      <div className={styles.header}>
+        <button 
+          onClick={syncCalendarEvents} 
+          className={`${styles.syncButton} ${isSyncing ? styles.syncing : ''}`}
+          disabled={isSyncing}
+        >
+          {isSyncing ? 'Syncing...' : 'Sync Calendar'}
+        </button>
+        {error && <div className={styles.error}>{error}</div>}
+      </div>
+
       <DragDropContext onDragEnd={onDragEnd}>
         <div className={styles.board}>
-          <div className={styles.column}>
-            <div className={styles.columnHeader}>To Do</div>
-            <Droppable droppableId="To_Do">
-              {(provided) => (
-                <div 
-                  ref={provided.innerRef}
-                  {...provided.droppableProps}
-                  className={styles.columnContent}
-                >
-                  {tasks
-                    .filter(task => task.status === 'To_Do')
-                    .map((task, index) => renderTask(task, index))}
-                  {provided.placeholder}
-                </div>
-              )}
-            </Droppable>
-          </div>
-          <div className={styles.column}>
-            <div className={styles.columnHeader}>Doing</div>
-            <Droppable droppableId="Doing">
-              {(provided) => (
-                <div 
-                  ref={provided.innerRef}
-                  {...provided.droppableProps}
-                  className={styles.columnContent}
-                >
-                  {tasks
-                    .filter(task => task.status === 'Doing')
-                    .map((task, index) => renderTask(task, index))}
-                  {provided.placeholder}
-                </div>
-              )}
-            </Droppable>
-          </div>
-          <div className={styles.column}>
-            <div className={styles.columnHeader}>Done</div>
-            <Droppable droppableId="Done">
-              {(provided) => (
-                <div 
-                  ref={provided.innerRef}
-                  {...provided.droppableProps}
-                  className={styles.columnContent}
-                >
-                  {tasks
-                    .filter(task => task.status === 'Done')
-                    .map((task, index) => renderTask(task, index))}
-                  {provided.placeholder}
-                </div>
-              )}
-            </Droppable>
-          </div>
+          {['To_Do', 'Doing', 'Done'].map((status) => (
+            <div key={status} className={styles.column}>
+              <div className={styles.columnHeader}>
+                {status.replace('_', ' ')}
+              </div>
+              <Droppable droppableId={status}>
+                {(provided) => (
+                  <div 
+                    ref={provided.innerRef}
+                    {...provided.droppableProps}
+                    className={styles.columnContent}
+                  >
+                    {loading ? (
+                      <div className={styles.loading}>Loading tasks...</div>
+                    ) : (
+                      tasks
+                        .filter(task => task.status === status)
+                        .map((task, index) => renderTask(task, index))
+                    )}
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+            </div>
+          ))}
         </div>
       </DragDropContext>
     </div>

@@ -1,20 +1,38 @@
+.boardWrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: #1B4242;
+  padding: 1rem;
+}
+
 .board {
   display: flex;
   gap: 1rem;
-  padding: 1rem;
   min-height: calc(100vh - 60px);
-  background-color: #1B4242;
+  position: relative;
 }
 
 .column {
+  flex: 1;
+  min-width: 250px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
   background-color: #265073;
   padding: 1rem;
   border-radius: 10px;
-  min-width: 270px;
-  display: flex;
-  flex-direction: column;
+}
+
+.columnContent {
   flex: 1;
-  height: 450px;
+  background-color: #2C74B3;
+  border-radius: 8px;
+  min-height: 100px;
+  position: relative;
+  overflow-y: auto;
+  max-height: calc(100vh - 200px);
+  padding: 1rem;
 }
 
 .columnHeader {
@@ -22,34 +40,6 @@
   font-weight: bold;
   margin-bottom: 1rem;
   color: white;
-}
-
-.columnContent {
-  flex: 1;
-  overflow-y: auto;
-  padding: 0.5rem;
-  margin-top: 0.5rem;
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-}
-
-/* Webkit scrollbar customization */
-.columnContent::-webkit-scrollbar {
-  width: 8px;
-}
-
-.columnContent::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
-}
-
-.columnContent::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 4px;
-}
-
-.columnContent::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.4);
 }
 
 .task {
@@ -148,11 +138,13 @@
 
 .columnContent {
   flex: 1;
-  overflow-y: auto;
-  padding: 0.5rem;
-  margin-top: 0.5rem;
-  background-color: rgba(255, 255, 255, 0.1);
+  padding: 1rem;
+  background-color: #2C74B3;
   border-radius: 8px;
+  min-height: 100px;
+  position: relative;
+  overflow-y: auto;
+  max-height: calc(100vh - 200px);
 }
 
 /* Webkit scrollbar customization */

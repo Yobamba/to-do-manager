@@ -1,0 +1,36 @@
+.timeIndicator {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #ea4335; /* Google Calendar's red color */
+  z-index: 1000;
+  pointer-events: none; /* Allow clicking through the line */
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.timeIndicator::before {
+  content: '';
+  position: absolute;
+  left: -6px;
+  width: 12px;
+  height: 12px;
+  background-color: #ea4335;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.timeLabel {
+  position: absolute;
+  left: -70px; /* Position label to the left of the circle */
+  background-color: #ea4335;
+  color: white;
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-size: 12px;
+  transform: translateY(-50%);
+  font-weight: 500;
+  white-space: nowrap;
+}

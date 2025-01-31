@@ -185,35 +185,37 @@ export default function CalendarMode() {
         {error && <div className={styles.error}>{error}</div>}
       </div>
 
-      <DragDropContext onDragEnd={onDragEnd}>
-        <div className={styles.board}>
-          {['To_Do', 'Doing', 'Done'].map((status) => (
-            <div key={status} className={styles.column}>
-              <div className={styles.columnHeader}>
-                {status.replace('_', ' ')}
+      <div className={styles.boardWrapper}>
+        <DragDropContext onDragEnd={onDragEnd}>
+          <div className={styles.board}>
+            {['To_Do', 'Doing', 'Done'].map((status) => (
+              <div key={status} className={styles.column}>
+                <div className={styles.columnHeader}>
+                  {status.replace('_', ' ')}
+                </div>
+                <Droppable droppableId={status}>
+                  {(provided) => (
+                    <div 
+                      ref={provided.innerRef}
+                      {...provided.droppableProps}
+                      className={styles.columnContent}
+                    >
+                      {loading ? (
+                        <div className={styles.loading}>Loading tasks...</div>
+                      ) : (
+                        tasks
+                          .filter(task => task.status === status)
+                          .map((task, index) => renderTask(task, index))
+                      )}
+                      {provided.placeholder}
+                    </div>
+                  )}
+                </Droppable>
               </div>
-              <Droppable droppableId={status}>
-                {(provided) => (
-                  <div 
-                    ref={provided.innerRef}
-                    {...provided.droppableProps}
-                    className={styles.columnContent}
-                  >
-                    {loading ? (
-                      <div className={styles.loading}>Loading tasks...</div>
-                    ) : (
-                      tasks
-                        .filter(task => task.status === status)
-                        .map((task, index) => renderTask(task, index))
-                    )}
-                    {provided.placeholder}
-                  </div>
-                )}
-              </Droppable>
-            </div>
-          ))}
-        </div>
-      </DragDropContext>
+            ))}
+          </div>
+        </DragDropContext>
+      </div>
     </div>
   );
 }

@@ -535,6 +535,27 @@ input:checked + .slider:before {
   margin-left: auto;
 }
 
+.matrixButton {
+  background-color: #5C8374;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background-color 0.3s;
+}
+
+.matrixButton:hover {
+  background-color: #7BA696;
+}
+
+.matrixButton.active {
+  background-color: #9EC8B9;
+  color: #1B4242;
+}
+
 /* Tablet and Smaller Desktop */
 @media (min-width: 701px) and (max-width: 1120px) {
   .grid {

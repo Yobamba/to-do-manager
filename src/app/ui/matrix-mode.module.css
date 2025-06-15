@@ -1,0 +1,198 @@
+.matrixContainer {
+  width: 100%;
+  min-height: calc(100vh - 60px);
+  background-color: #1B4242;
+  padding: 1rem;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.header h2 {
+  color: white;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.newTaskContainer {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.taskInput {
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  min-width: 300px;
+}
+
+.addButton {
+  padding: 0.5rem 1.5rem;
+  background-color: #5C8374;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+.addButton:hover {
+  background-color: #7BA696;
+}
+
+.matrixGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 1rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  height: calc(100vh - 250px);
+  min-height: 600px;
+}
+
+.quadrant {
+  background-color: #265073;
+  border-radius: 10px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.quadrant1 {
+  grid-column: 1;
+  grid-row: 1;
+  border: 3px solid #dc3545; /* Red for urgent & important */
+}
+
+.quadrant2 {
+  grid-column: 2;
+  grid-row: 1;
+  border: 3px solid #28a745; /* Green for not urgent & important */
+}
+
+.quadrant3 {
+  grid-column: 1;
+  grid-row: 2;
+  border: 3px solid #ffc107; /* Yellow for urgent & not important */
+}
+
+.quadrant4 {
+  grid-column: 2;
+  grid-row: 2;
+  border: 3px solid #6c757d; /* Gray for not urgent & not important */
+}
+
+.quadrantHeader {
+  text-align: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.quadrantHeader h3 {
+  color: white;
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.subtitle {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+.quadrantContent {
+  flex: 1;
+  background-color: #2C74B3;
+  border-radius: 8px;
+  padding: 1rem;
+  overflow-y: auto;
+  min-height: 200px;
+}
+
+.quadrantContent::-webkit-scrollbar {
+  width: 8px;
+}
+
+.quadrantContent::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.quadrantContent::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+.quadrantContent::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.draggable {
+  transition: transform 0.2s;
+}
+
+.draggable:hover {
+  transform: scale(1.02);
+}
+
+.draggable.dragging {
+  opacity: 0.5;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .matrixGrid {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, minmax(300px, auto));
+    height: auto;
+  }
+
+  .quadrant1,
+  .quadrant2,
+  .quadrant3,
+  .quadrant4 {
+    grid-column: 1;
+  }
+
+  .quadrant1 {
+    grid-row: 1;
+  }
+
+  .quadrant2 {
+    grid-row: 2;
+  }
+
+  .quadrant3 {
+    grid-row: 3;
+  }
+
+  .quadrant4 {
+    grid-row: 4;
+  }
+
+  .taskInput {
+    min-width: 200px;
+    width: 100%;
+  }
+
+  .newTaskContainer {
+    flex-direction: column;
+    width: 100%;
+    padding: 0 1rem;
+  }
+
+  .addButton {
+    width: 100%;
+  }
+}

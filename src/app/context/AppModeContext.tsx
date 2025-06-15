@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 
-export type AppMode = 'simple' | 'calendar';
+export type AppMode = 'simple' | 'calendar' | 'matrix';
 
 interface AppSettings {
   mode: AppMode;
@@ -13,6 +13,7 @@ interface AppSettings {
 interface AppModeContextType {
   mode: AppMode;
   toggleMode: () => void;
+  setMode: (mode: AppMode) => void;
   settings: AppSettings;
   updateSettings: (settings: Partial<AppSettings>) => void;
 }
@@ -47,6 +48,10 @@ export function AppModeProvider({ children }: { children: ReactNode }) {
     }));
   };
 
+  const setMode = (mode: AppMode) => {
+    setSettings(prev => ({ ...prev, mode }));
+  };
+
   const updateSettings = (newSettings: Partial<AppSettings>) => {
     setSettings(prev => ({ ...prev, ...newSettings }));
   };
@@ -59,7 +64,8 @@ export function AppModeProvider({ children }: { children: ReactNode }) {
   return (
     <AppModeContext.Provider value={{ 
       mode: settings.mode, 
-      toggleMode, 
+      toggleMode,
+      setMode,
       settings,
       updateSettings 
     }}>

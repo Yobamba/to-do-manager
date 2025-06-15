@@ -10,6 +10,7 @@ import { useAppMode } from './context/AppModeContext';
 // Dynamically import components with no SSR
 const Cards = dynamic(() => import("@/app/ui/cards"), { ssr: false });
 const CalendarMode = dynamic(() => import("@/app/ui/CalendarMode"), { ssr: false });
+const MatrixMode = dynamic(() => import("@/app/ui/MatrixMode"), { ssr: false });
 
 export default function Home() {
   const { mode } = useAppMode();
@@ -30,8 +31,10 @@ export default function Home() {
             <div className={styles.grid}>
               <Cards />
             </div>
-          ) : (
+          ) : mode === 'calendar' ? (
             <CalendarMode />
+          ) : (
+            <MatrixMode />
           )}
         </Suspense>
       </main>

@@ -154,14 +154,17 @@ export default function Cards() {
             taskElement.style.textDecoration = 'line-through';
             taskElement.style.backgroundColor = '#f0f0f0';
             taskElement.style.opacity = '0.7';
+            taskElement.style.color = 'black';
           } else if (data.status === 'Doing') {
             taskElement.style.backgroundColor = "lightsteelblue";
             taskElement.style.opacity = '1';
             taskElement.style.textDecoration = 'unset';
+            taskElement.style.color = 'black';
           } else {
             taskElement.style.backgroundColor = "white";
             taskElement.style.opacity = '1';
             taskElement.style.textDecoration = 'unset';
+            taskElement.style.color = 'black';
           }
 
           container.appendChild(taskElement);

@@ -56,7 +56,7 @@ export default function Cards() {
   const loadTasksFromLocalStorage = () => {
     const savedTasks = localStorage.getItem("tasks");
     if (savedTasks) {
-      const tasksData: { id: string, text: string, status: string }[] = JSON.parse(savedTasks);
+      const tasksData: { id?: string, text: string, status: string }[] = JSON.parse(savedTasks);
       const newColumns: Columns = {
         'To_Do': { id: 'To_Do', title: 'To_Do', tasks: [] },
         'Doing': { id: 'Doing', title: 'Doing', tasks: [] },
@@ -65,7 +65,8 @@ export default function Cards() {
 
       tasksData.forEach(task => {
         if (newColumns[task.status]) {
-          newColumns[task.status].tasks.push({ id: task.id, text: task.text });
+          const taskId = task.id || `task-${Date.now()}-${Math.random()}`;
+          newColumns[task.status].tasks.push({ id: taskId, text: task.text });
         }
       });
 

@@ -206,13 +206,8 @@ export default function Cards() {
                   <div
                     ref={provided.innerRef}
                     {...provided.droppableProps}
-                    className={styles.taskContent}
-                    style={{
-                      background: snapshot.isDraggingOver ? 'lightblue' : 'lightgrey',
-                      padding: 4,
-                      width: 250,
-                      minHeight: 500,
-                    }}
+                    className={styles.columnContent}
+                
                   >
                     {column.tasks.map((task, index) => (
                       <Draggable key={task.id} draggableId={task.id} index={index}>

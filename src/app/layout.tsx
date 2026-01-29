@@ -21,9 +21,11 @@ export default function RootLayout({
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
       </head>
       <body className={inter.className}>
-        <Providers>
-          {children}
-        </Providers>
+        <div style={{ height: '100vh', overflow: 'auto' }}>
+          <Providers>
+            {children}
+          </Providers>
+        </div>
       </body>
     </html>
   )

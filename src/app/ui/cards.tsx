@@ -2,12 +2,15 @@
 
 import React, { useState, useEffect } from "react";
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { MoreVertical } from "lucide-react"  // Vertical dots icon
 import styles from "../page.module.css";
 
 // Define the types for the task and column
 interface Task {
   id: string;
   text: string;
+  isEditing?: boolean;
 }
 
 interface Column {
@@ -19,7 +22,6 @@ interface Column {
 type Columns = Record<string, Column>;
 
 export default function Cards() {
-  const [newTask, setNewTask] = useState("");
   const [columns, setColumns] = useState<Columns>({
     'To_Do': {
       id: 'To_Do',
@@ -74,18 +76,44 @@ export default function Cards() {
     }
   };
 
-  const handleAddTask = () => {
-    if (newTask.trim() === "") return;
-
+  const handleAddTask = (columnId: string) => {
     const newTaskId = `task-${Date.now()}`;
-    const newTaskObj: Task = { id: newTaskId, text: newTask };
+    const newTask: Task = { id: newTaskId, text: "", isEditing: true };
 
     const newColumns = { ...columns };
-    newColumns['To_Do'].tasks.push(newTaskObj);
+    newColumns[columnId].tasks.push(newTask);
 
     setColumns(newColumns);
+  };
+
+  const handleTaskChange = (columnId: string, taskId: string, newText: string) => {
+    const newColumns = { ...columns };
+    const taskIndex = newColumns[columnId].tasks.findIndex(t => t.id === taskId);
+    if (taskIndex > -1) {
+      newColumns[columnId].tasks[taskIndex].text = newText;
+      setColumns(newColumns);
+    }
+  };
+
+  const handleTaskBlur = (columnId: string, taskId: string) => {
+    const newColumns = { ...columns };
+    const taskIndex = newColumns[columnId].tasks.findIndex(t => t.id === taskId);
+    if (taskIndex > -1) {
+      newColumns[columnId].tasks[taskIndex].isEditing = false;
+      // If the task is empty, remove it
+      if (newColumns[columnId].tasks[taskIndex].text.trim() === "") {
+        newColumns[columnId].tasks.splice(taskIndex, 1);
+      }
+      setColumns(newColumns);
+      saveTasksToLocalStorage(newColumns);
+    }
+  };
+
+  const clearColumnTasks = (columnId: string) => {
+    const newColumns = { ...columns };
+    newColumns[columnId].tasks = [];
+    setColumns(newColumns);
     saveTasksToLocalStorage(newColumns);
-    setNewTask("");
   };
 
   const clearAllTasks = () => {
@@ -96,29 +124,6 @@ export default function Cards() {
     };
     setColumns(newColumns);
     localStorage.removeItem("tasks");
-  };
-
-  const clearDoneTasks = () => {
-    const newColumns = { ...columns };
-    newColumns['Done'].tasks = [];
-    setColumns(newColumns);
-    saveTasksToLocalStorage(newColumns);
-  };
-
-  const resetAllTasks = () => {
-    const allTasks = Object.values(columns).flatMap(column => column.tasks);
-    const newColumns: Columns = {
-      'To_Do': { id: 'To_Do', title: 'To_Do', tasks: allTasks },
-      'Doing': { id: 'Doing', title: 'Doing', tasks: [] },
-      'Done': { id: 'Done', title: 'Done', tasks: [] },
-    };
-    setColumns(newColumns);
-    saveTasksToLocalStorage(newColumns);
-  };
-
-  const handleFormSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    handleAddTask();
   };
 
   const onDragEnd = (result: any) => {
@@ -169,48 +174,35 @@ export default function Cards() {
 
   return (
     <>
-      <div>
-        <div className={`${styles.newTaskContainer}`}>
-          <form className={`${styles.formCSS}`} onSubmit={handleFormSubmit}>
-            <label htmlFor="newTaskInput" className={`${styles.taskHeading1}`}>
-              New Task:
-            </label>
-            <input
-              className={`${styles.inputArea}`}
-              type="text"
-              id="newTaskInput"
-              value={newTask}
-              onChange={(e) => setNewTask(e.target.value)}
-              placeholder="Type your new task here"
-            />
-            <button type="submit" className={`${styles.inputArea}`}>Add Task</button>
-          </form>
-        </div>
-
-        <div className={`${styles.newTaskContainer2}`}>
-          <button id="clearAll" onClick={clearAllTasks} className={`${styles.inputArea2}`}>Clear All Tasks</button>
-          <button onClick={resetAllTasks} className={`${styles.inputArea2}`}>Reset All Tasks</button>
-        </div>
-      </div>
-
       <DragDropContext onDragEnd={onDragEnd}>
         <div className={styles.board}>
           {Object.values(columns).map(column => (
-            <div key={column.id} className={`${styles.container} container ${column.id}`}>
-              <h4 className={`${styles.taskHeading}`}>{column.title.replace('_', ' ')}</h4>
-              {column.id === 'Done' && (
-                <button onClick={clearDoneTasks} className={`${styles.inputArea}`}>Clear</button>
-              )}
+            <div key={column.id} className={`${styles.container} container ${column.id} relative group`}> 
+              <div className="relative group">
+                <h4 className={`${styles.taskHeading}`}>{column.title.replace('_', ' ')}</h4>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <button className="absolute top-2 right-2 p-1 opacity-0 group-hover:opacity-100 hover:bg-muted rounded-full transition-all">
+                      <MoreVertical className="h-4 w-4" />
+                    </button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-48">
+                    <DropdownMenuItem onClick={() => clearColumnTasks(column.id)}>Clear Tasks</DropdownMenuItem>
+                    {column.id === 'To_Do' && (
+                      <DropdownMenuItem onClick={clearAllTasks}>Clear All Tasks</DropdownMenuItem>
+                    )}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
               <Droppable droppableId={column.id}>
                 {(provided, snapshot) => (
                   <div
                     ref={provided.innerRef}
                     {...provided.droppableProps}
                     className={styles.columnContent}
-                
                   >
                     {column.tasks.map((task, index) => (
-                      <Draggable key={task.id} draggableId={task.id} index={index}>
+                      <Draggable key={task.id} draggableId={task.id} index={index} isDragDisabled={task.isEditing}>
                         {(provided, snapshot) => (
                           <div
                             ref={provided.innerRef}
@@ -227,7 +219,19 @@ export default function Cards() {
                               ...provided.draggableProps.style,
                             }}
                           >
-                            {task.text}
+                            {task.isEditing ? (
+                              <input
+                                type="text"
+                                value={task.text}
+                                onChange={(e) => handleTaskChange(column.id, task.id, e.target.value)}
+                                onBlur={() => handleTaskBlur(column.id, task.id)}
+                                onKeyDown={(e) => e.key === 'Enter' && handleTaskBlur(column.id, task.id)}
+                                autoFocus
+                                className="bg-transparent w-full focus:outline-none"
+                              />
+                            ) : (
+                              task.text
+                            )}
                           </div>
                         )}
                       </Draggable>
@@ -236,6 +240,7 @@ export default function Cards() {
                   </div>
                 )}
               </Droppable>
+              <button onClick={() => handleAddTask(column.id)} className="w-full mt-2 p-2 bg-gray-200 rounded hover:bg-gray-300">+ Add Task</button>
             </div>
           ))}
         </div>

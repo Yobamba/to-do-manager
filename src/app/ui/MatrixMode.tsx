@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState, useRef } from 'react';
 import styles from './matrix-mode.module.css';
-import { initializeDraggable } from './cardjs.js';
 import { signIn, useSession } from 'next-auth/react';
 import { 
   fetchCalendarEvents, 

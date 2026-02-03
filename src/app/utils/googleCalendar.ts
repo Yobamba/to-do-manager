@@ -38,7 +38,7 @@ export async function initializeGoogleCalendarApi() {
   }
 }
 
-export async function fetchCalendarEvents(days: number = 7): Promise<CalendarEvent[]> {
+export async function fetchCalendarEvents(days: number = 1): Promise<CalendarEvent[]> {
   try {
     const response = await fetch(`/api/calendar/events?days=${days}`);
     if (!response.ok) {

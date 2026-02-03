@@ -10,7 +10,7 @@
   display: flex;
   gap: 1rem;
   /* min-height: calc(100vh - 60px); */
-  /* max-height: 65%; */
+  max-height: 65%;
   position: relative;
 }
 
@@ -29,7 +29,7 @@
   flex: 1;
   background-color: #c75d3a;
   border-radius: 8px;
-  min-height: 100px;
+  min-height: 10%;
   position: relative;
   overflow-y: auto;
   /* max-height: calc(100vh - 200px); */
@@ -237,6 +237,7 @@
   margin: 10px;
   flex: 1;
   min-width: 300px;
+  min-height: 285px;
   /* max-height: 65%; */
   display: flex;
   flex-direction: column;

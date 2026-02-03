@@ -2,18 +2,21 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import styles from "../page.module.css";
 import ModeToggle from './ModeToggle';
 import { useAppMode } from '../context/AppModeContext';
+import { use } from 'react';
 
 const Navbar = () => {
   const { mode, setMode } = useAppMode();
+  const pathName = usePathname();
 
   return (
     <nav className={styles.navbar}>
       <ul className={styles.navList}>
-        <li>
-          <Link href="/">
+        <li onClick={() => setMode('simple')}>
+          <Link href="/" className={`${pathName === '/' && mode !== 'matrix' ? styles.matrixButton : ''}`}>
             Home
           </Link>
         </li>
@@ -25,7 +28,7 @@ const Navbar = () => {
         <li>
           <button 
             onClick={() => setMode('matrix')}
-            className={`${styles.matrixButton} ${mode === 'matrix' ? styles.active : ''}`}
+            className={`${mode === 'matrix' ? styles.matrixButton : styles.whiteText}`}
           >
             Matrix View
           </button>

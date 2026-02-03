@@ -140,7 +140,7 @@ export default function CalendarMode() {
           className={`${styles.task} ${snapshot.isDragging ? styles.dragging : ''}`}
           style={{
             ...provided.draggableProps.style,
-            backgroundColor: task.backgroundColor || '#265073',
+            backgroundColor: task.backgroundColor || '#c75d3a',
             color: task.foregroundColor || '#FFFFFF',
           }}
         >

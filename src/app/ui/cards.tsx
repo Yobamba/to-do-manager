@@ -214,7 +214,7 @@ export default function Cards() {
                               padding: 16,
                               margin: "0 0 8px 0",
                               minHeight: "50px",
-                              backgroundColor: snapshot.isDragging ? "#263B4A" : "#456C86",
+                              backgroundColor: snapshot.isDragging ? "#a84832" : "#6b2f21",
                               color: "white",
                               ...provided.draggableProps.style,
                             }}

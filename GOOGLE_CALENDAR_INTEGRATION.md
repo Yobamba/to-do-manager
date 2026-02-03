@@ -364,7 +364,7 @@ export async function GET(request: Request) {
       
       return {
         ...event,
-        backgroundColor: eventColor?.background || '#265073', // Use default blue if no color
+        backgroundColor: eventColor?.background || '#c75d3a', // Use default blue if no color
         foregroundColor: eventColor?.foreground || '#FFFFFF'
       };
     });
@@ -808,7 +808,7 @@ export default function CalendarMode() {
           className={`${styles.task} ${snapshot.isDragging ? styles.dragging : ''}`}
           style={{
             ...provided.draggableProps.style,
-            backgroundColor: task.backgroundColor || '#265073',
+            backgroundColor: task.backgroundColor || '#c75d3a',
             color: task.foregroundColor || '#FFFFFF',
           }}
         >
@@ -1133,14 +1133,14 @@ Create a file at `src/app/ui/calendar.module.css`:
   position: relative;
   width: 100%;
   min-height: calc(100vh - 60px);
-  background-color: #1B4242;
+  background-color: #2e201b;
   padding: 20px;
 }
 
 .syncButton {
   font-size: 0.75rem;
   padding: 4px 8px;
-  background-color: #5C8374;
+  background-color: #c75d3a;
   color: white;
   border: none;
   border-radius: 4px;

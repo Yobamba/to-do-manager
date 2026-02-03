@@ -1,9 +1,11 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Roboto } from 'next/font/google'
 import './globals.css'
 import { Providers } from './providers'
 
-const inter = Inter({ subsets: ['latin'] })
+const roboto = Roboto({ weight: ['400'],
+  subsets: ['latin'] 
+})
 
 export const metadata: Metadata = {
   title: 'To Do Manager',
@@ -20,13 +22,12 @@ export default function RootLayout({
     <head>
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
       </head>
-      <body className={inter.className}>
-        <div style={{ height: '100vh', overflow: 'auto' }}>
-          <Providers>
-            {children}
-          </Providers>
-        </div>
-      </body>
+      <body className={roboto.className}>
+                        <div className='h-screen w-screen flex flex-col' >
+                          <Providers>
+                            {children}
+                          </Providers>
+                        </div>      </body>
     </html>
   )
 }

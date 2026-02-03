@@ -2,14 +2,15 @@
   position: relative;
   width: 100%;
   height: 100%;
-  background-color: #1B4242;
+  background-color: #2e201b;
   padding: 1rem;
 }
 
 .board {
   display: flex;
   gap: 1rem;
-  min-height: calc(100vh - 60px);
+  /* min-height: calc(100vh - 60px); */
+  /* max-height: 65%; */
   position: relative;
 }
 
@@ -19,19 +20,19 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  background-color: #265073;
+  background-color: #c75d3a;
   padding: 1rem;
   border-radius: 10px;
 }
 
 .columnContent {
   flex: 1;
-  background-color: #2C74B3;
+  background-color: #c75d3a;
   border-radius: 8px;
   min-height: 100px;
   position: relative;
   overflow-y: auto;
-  max-height: calc(100vh - 200px);
+  /* max-height: calc(100vh - 200px); */
   padding: 1rem;
 }
 
@@ -77,7 +78,7 @@
   right: 20px;
   font-size: 0.75rem;
   padding: 4px 8px;
-  background-color: #5C8374;
+  background-color: #c75d3a;
   color: white;
   border: none;
   border-radius: 4px;
@@ -94,9 +95,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* padding: 2rem; */
-  min-height: calc(100vh - 60px);
-  background-color: #1B4242;
+  flex-grow: 1; /* Added to make the main content expand */
+  background-color: #2e201b;
   width: 100%;
   box-sizing: border-box;
 }
@@ -114,18 +114,16 @@
   gap: 1rem;
   /* padding: 1rem; */
   width: 100%;
-  background-color: #1B4242;
+  background-color: #2e201b;
 }
 
 .column {
-  background-color: #265073;
+  background-color: #c75d3a;
   padding: 1rem;
   border-radius: 10px;
   min-width: 270px;
   display: flex;
   flex-direction: column;
-  flex: 1;
-  height: 450px;
 }
 
 .columnHeader {
@@ -138,12 +136,12 @@
 .columnContent {
   flex: 1;
   padding: 1rem;
-  background-color: #2C74B3;
+  background-color: #c75d3a;
   border-radius: 8px;
   min-height: 100px;
   position: relative;
   overflow-y: auto;
-  max-height: calc(100vh - 200px);
+  /* max-height: calc(100vh - 200px); */
 }
 
 /* Webkit scrollbar customization */
@@ -200,7 +198,7 @@
   right: 20px;
   font-size: 0.75rem;
   padding: 4px 8px;
-  background-color: #5C8374;
+  background-color: #c75d3a;
   color: white;
   border: none;
   border-radius: 4px;
@@ -233,13 +231,13 @@
 
 /* Container and scrollable content styles */
 .container {
-  background: #265073;
+  background: #c75d3a;
   border-radius: 12px;
   padding: 20px;
   margin: 10px;
   flex: 1;
   min-width: 300px;
-  height: 90%;
+  /* max-height: 65%; */
   display: flex;
   flex-direction: column;
   position: relative;
@@ -252,7 +250,7 @@
   background: rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   margin-top: 16px;
-  max-height: calc(100% - 60px);
+  /* max-height: calc(100% - 60px); */
 }
 
 /* Custom scrollbar styles for simple mode */
@@ -346,25 +344,25 @@ button.inputArea {
 
 
   .newTaskContainer {
-    background-color: #265073;
+    background-color: #c75d3a;
     padding: 1rem;
     border-radius: 10px;
     min-width: 200px;
     margin: 10px;
     display: flex;
     flex-direction: column;
-    max-height: 180px;
+    /* max-height: 180px; */
   }
 
   .newTaskContainer2 {
-    background-color: #265073;
+    background-color: #c75d3a;
     padding: 1rem;
     border-radius: 10px;
     min-width: 100px;
     margin: 40px;
     display: flex;
     flex-direction: column;
-    max-height: 180px;
+    /* max-height: 180px; */
   }
 
 
@@ -459,7 +457,7 @@ button.inputArea {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #9EC8B9;
+  background-color: #c75d3a;
   transition: .4s;
   border-radius: 34px;
   display: flex;
@@ -480,7 +478,7 @@ button.inputArea {
 }
 
 input:checked + .slider {
-  background-color: #1B4242;
+  background-color: #2e201b;
 }
 
 input:checked + .slider:before {
@@ -500,7 +498,7 @@ input:checked + .slider:before {
 
 /* Navbar Styles */
 .navbar {
-  background-color: #1B4242;
+  background-color: #2e201b;
   padding: 1rem;
   width: 100%;
   position: sticky;
@@ -519,6 +517,10 @@ input:checked + .slider:before {
   gap: 2rem;
 }
 
+.whiteText {
+  color: white;
+}
+
 .navList li a {
   color: white;
   text-decoration: none;
@@ -527,7 +529,7 @@ input:checked + .slider:before {
 }
 
 .navList li a:hover {
-  color: #9EC8B9;
+  color: #c75d3a;
 }
 
 .modeToggleItem {
@@ -535,7 +537,7 @@ input:checked + .slider:before {
 }
 
 .matrixButton {
-  background-color: #5C8374;
+  background-color: #c75d3a;
   color: white;
   border: none;
   padding: 0.5rem 1rem;
@@ -547,12 +549,12 @@ input:checked + .slider:before {
 }
 
 .matrixButton:hover {
-  background-color: #7BA696;
+  background-color: #6b2f21;
 }
 
 .matrixButton.active {
-  background-color: #9EC8B9;
-  color: #1B4242;
+  background-color: #c75d3a;
+  color: #2e201b;
 }
 
 /* Tablet and Smaller Desktop */
@@ -565,6 +567,7 @@ input:checked + .slider:before {
 .grid {
   display: flex;
   margin: 0 auto;
+  align-items: flex-start; /* Added to make columns independent in height */
 }
 
 .card {
@@ -658,8 +661,8 @@ input:checked + .slider:before {
 
 .calendarContainer {
   position: relative;
-  min-height: calc(100vh - 60px);
-  background-color: #1B4242;
+  /* min-height: calc(100vh - 60px); */
+  background-color: #2e201b;
   padding: 20px;
 }
 
@@ -685,7 +688,7 @@ input:checked + .slider:before {
 .calendarTask p {
   margin: 0 0 8px 0;
   font-size: 1rem;
-  color: #1B4242;
+  color: #2e201b;
   font-weight: 500;
 }
 
@@ -743,7 +746,7 @@ input:checked + .slider:before {
 }
 
 .authCard h1 {
-  color: #1B4242;
+  color: #2e201b;
   margin-bottom: 1rem;
 }
 
@@ -798,7 +801,7 @@ input:checked + .slider:before {
 }
 
 .calendarAuth h2 {
-  color: #1B4242;
+  color: #2e201b;
   margin-bottom: 1rem;
   font-size: 1.5rem;
 }

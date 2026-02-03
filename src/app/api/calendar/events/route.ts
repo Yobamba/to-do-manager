@@ -45,7 +45,7 @@ export async function GET() {
       
       return {
         ...event,
-        backgroundColor: eventColor?.background || '#265073', // Use our default blue if no color
+        backgroundColor: eventColor?.background || '#c75d3a', // Use our default blue if no color
         foregroundColor: eventColor?.foreground || '#FFFFFF'
       };
     });

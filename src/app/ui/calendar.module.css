@@ -1,15 +1,15 @@
 .calendarContainer {
   position: relative;
   width: 100%;
-  min-height: calc(100vh - 60px);
-  background-color: #1B4242;
+  /* min-height: calc(100vh - 60px); */
+  background-color: #2e201b;
   padding: 20px;
 }
 
 .syncButton {
   font-size: 0.75rem;
   padding: 4px 8px;
-  background-color: #5C8374;
+  background-color: #c75d3a;
   color: white;
   border: none;
   border-radius: 4px;

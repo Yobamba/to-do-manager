@@ -1,7 +1,7 @@
 .matrixContainer {
   width: 100%;
-  min-height: calc(100vh - 60px);
-  background-color: #1B4242;
+  /* min-height: calc(100vh - 60px); */
+  background-color: #2e201b;
   padding: 1rem;
 }
 
@@ -34,7 +34,7 @@
 
 .addButton {
   padding: 0.5rem 1.5rem;
-  background-color: #5C8374;
+  background-color: #c75d3a;
   color: white;
   border: none;
   border-radius: 5px;
@@ -54,12 +54,12 @@
   gap: 1rem;
   max-width: 1400px;
   margin: 0 auto;
-  height: calc(100vh - 250px);
+  /* height: calc(100vh - 250px); */
   min-height: 600px;
 }
 
 .quadrant {
-  background-color: #265073;
+  background-color: #c75d3a;
   border-radius: 10px;
   padding: 1rem;
   display: flex;
@@ -113,7 +113,7 @@
 
 .quadrantContent {
   flex: 1;
-  background-color: #2C74B3;
+  background-color: #c75d3a;
   border-radius: 8px;
   padding: 1rem;
   overflow-y: auto;
@@ -160,7 +160,7 @@
 
 .modeButton {
   padding: 0.5rem 1.5rem;
-  background-color: #265073;
+  background-color: #c75d3a;
   color: white;
   border: 2px solid transparent;
   border-radius: 5px;
@@ -170,11 +170,11 @@
 }
 
 .modeButton:hover {
-  background-color: #2C74B3;
+  background-color: #c75d3a;
 }
 
 .modeButton.active {
-  background-color: #5C8374;
+  background-color: #c75d3a;
   border-color: #7BA696;
 }
 
@@ -218,7 +218,7 @@
 
 .syncButton {
   padding: 0.5rem 1.5rem;
-  background-color: #5C8374;
+  background-color: #c75d3a;
   color: white;
   border: none;
   border-radius: 5px;

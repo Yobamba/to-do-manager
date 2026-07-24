@@ -88,7 +88,7 @@
 }
 
 .syncButton:hover {
-  background-color: #7BA696;
+  background-color: #6b2f21;
 }
 
 .main {
@@ -208,7 +208,7 @@
 }
 
 .syncButton:hover {
-  background-color: #7BA696;
+  background-color: #6b2f21;
 }
 
 .Done p.draggable {
@@ -479,7 +479,7 @@ button.inputArea {
 }
 
 input:checked + .slider {
-  background-color: #2e201b;
+  background-color: black;
 }
 
 input:checked + .slider:before {

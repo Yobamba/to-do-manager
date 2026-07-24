@@ -44,7 +44,7 @@
 }
 
 .addButton:hover {
-  background-color: #7BA696;
+  background-color: #2e201b;
 }
 
 .matrixGrid {
@@ -228,7 +228,7 @@
 }
 
 .syncButton:hover:not(:disabled) {
-  background-color: #7BA696;
+  background-color: #6b2f21;
 }
 
 .syncButton:disabled {

@@ -10,7 +10,7 @@
   display: flex;
   gap: 1rem;
   /* min-height: calc(100vh - 60px); */
-  max-height: 65%;
+  max-height: 100%;
   position: relative;
 }
 
@@ -84,7 +84,7 @@
   border-radius: 4px;
   cursor: pointer;
   z-index: 1000;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .syncButton:hover {
@@ -114,6 +114,7 @@
   gap: 1rem;
   /* padding: 1rem; */
   width: 100%;
+  height: 80dvh;
   background-color: #2e201b;
 }
 
@@ -204,7 +205,7 @@
   border-radius: 4px;
   cursor: pointer;
   z-index: 1000;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .syncButton:hover {
@@ -310,12 +311,12 @@
   font-size: 1.5rem;
 }
 
-  .formCSS {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 10px;
+.formCSS {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .inputArea {
@@ -343,94 +344,89 @@ button.inputArea {
   margin: 15px;
 }
 
+.newTaskContainer {
+  background-color: #c75d3a;
+  padding: 1rem;
+  border-radius: 10px;
+  min-width: 200px;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  /* max-height: 180px; */
+}
 
-  .newTaskContainer {
-    background-color: #c75d3a;
-    padding: 1rem;
-    border-radius: 10px;
-    min-width: 200px;
-    margin: 10px;
-    display: flex;
-    flex-direction: column;
-    /* max-height: 180px; */
-  }
+.newTaskContainer2 {
+  background-color: #c75d3a;
+  padding: 1rem;
+  border-radius: 10px;
+  min-width: 100px;
+  margin: 40px;
+  display: flex;
+  flex-direction: column;
+  /* max-height: 180px; */
+}
 
-  .newTaskContainer2 {
-    background-color: #c75d3a;
-    padding: 1rem;
-    border-radius: 10px;
-    min-width: 100px;
-    margin: 40px;
-    display: flex;
-    flex-direction: column;
-    /* max-height: 180px; */
-  }
+.taskHeading1 {
+  color: white;
+  margin-bottom: 5px;
+}
 
+.taskHeading {
+  color: black;
+  margin-bottom: 5px;
+}
 
+.doingp {
+  background-color: red;
+}
 
-  .taskHeading1 {
-    color: white;
-    margin-bottom: 5px;
-  }
+.draggable {
+  padding: 1rem;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 5px;
+  cursor: move;
+  width: 100%;
+}
 
-  .taskHeading {
-    color: black;
-    margin-bottom: 5px;
-  }
+.draggable.dragging {
+  opacity: 0.5;
+}
 
-  .doingp {
-    background-color: red;
-  }
-  
-  .draggable {
-    padding: 1rem;
-    background-color: white;
-    border: 1px solid black;
-    border-radius: 5px;
-    cursor: move;
-    width: 100%;
-  }
+.intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 15px;
+}
 
-  .draggable.dragging {
-    opacity: .5;
-  }
+.buttonsIcon {
+  /* width: 20px; Adjust the width and height based on your design */
+  /* height: 20px; */
+  background-color: #3498db; /* Change the background color to your preference */
+  border-radius: 50%; /* Create a circular shape */
+  cursor: pointer; /* Change the cursor to indicate it's clickable */
+  position: absolute; /* Position it absolutely within the task container */
+  top: 5px; /* Adjust the top and right values for positioning */
+  right: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff; /* Set the color of the icon */
+}
 
-  .intro {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 15px;
-  }
+.visible {
+  display: block; /* or any other style to make it visible */
+}
 
-  .buttonsIcon {
-    /* width: 20px; Adjust the width and height based on your design */
-    /* height: 20px; */
-    background-color: #3498db; /* Change the background color to your preference */
-    border-radius: 50%; /* Create a circular shape */
-    cursor: pointer; /* Change the cursor to indicate it's clickable */
-    position: absolute; /* Position it absolutely within the task container */
-    top: 5px; /* Adjust the top and right values for positioning */
-    right: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #ffffff; /* Set the color of the icon */
-  }
+.hidden {
+  display: none !important; /* hide the buttons initially */
+}
 
-  .visible {
-    display: block; /* or any other style to make it visible */
-  }
-
-  .hidden {
-    display: none !important; /* hide the buttons initially */
-  }
-  
-  .buttonsContainer {
-    display: none; /* initially hide the buttons container */
-    /* additional styling for the buttons container */
-  }
-
-
+.buttonsContainer {
+  display: none; /* initially hide the buttons container */
+  /* additional styling for the buttons container */
+}
 
 /* Mode Toggle Styles */
 .modeToggleContainer {
@@ -459,7 +455,7 @@ button.inputArea {
   right: 0;
   bottom: 0;
   background-color: #c75d3a;
-  transition: .4s;
+  transition: 0.4s;
   border-radius: 34px;
   display: flex;
   align-items: center;
@@ -474,7 +470,7 @@ button.inputArea {
   left: 4px;
   bottom: 4px;
   background-color: white;
-  transition: .4s;
+  transition: 0.4s;
   border-radius: 50%;
 }
 
@@ -576,7 +572,9 @@ input:checked + .slider:before {
   border-radius: var(--border-radius);
   background: rgba(var(--card-rgb), 0);
   border: 1px solid rgba(var(--card-border-rgb), 0);
-  transition: background 200ms, border 200ms;
+  transition:
+    background 200ms,
+    border 200ms;
 }
 
 .card span {
@@ -608,12 +606,10 @@ input:checked + .slider:before {
 
 /* Mobile */
 @media (max-width: 700px) {
-
   .grid {
     grid-template-columns: 1fr;
     margin-bottom: 120px;
     overflow-x: auto;
-    
   }
 
   .card {
@@ -635,8 +631,6 @@ input:checked + .slider:before {
 
   .navbar {
     justify-content: flex-start;
-    
-  
   }
 
   .main {
@@ -644,7 +638,6 @@ input:checked + .slider:before {
     flex-direction: column;
     align-items: stretch;
   }
-  
 }
 
 /* Calendar Mode Styles */
@@ -766,20 +759,20 @@ input:checked + .slider:before {
   border: 1px solid #dadce0;
   border-radius: 4px;
   padding: 8px 16px;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 14px;
   color: #3c4043;
   font-weight: 500;
   cursor: pointer;
   transition: background-color 0.2s;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
   min-width: 200px;
 }
 
 .googleButton:hover {
   background-color: #f8f9fa;
   border-color: #dadce0;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
 }
 
 .buttonText {
@@ -796,7 +789,7 @@ input:checked + .slider:before {
   padding: 2rem;
   background-color: #fff;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   max-width: 400px;
   margin: 2rem auto;
 }

@@ -276,6 +276,8 @@ export default function Cards() {
                                   padding: 16,
                                   margin: "0 0 8px 0",
                                   minHeight: "50px",
+                                  textWrapStyle: "pretty",
+                                  overflowWrap: "anywhere",
                                   backgroundColor: snapshot.isDragging
                                     ? "#a84832"
                                     : "#6b2f21",
@@ -284,8 +286,7 @@ export default function Cards() {
                                 }}
                               >
                                 {task.isEditing ? (
-                                  <input
-                                    type="text"
+                                  <textarea
                                     value={task.text}
                                     onChange={(e) =>
                                       handleTaskChange(
@@ -302,7 +303,14 @@ export default function Cards() {
                                       handleTaskBlur(column.id, task.id)
                                     }
                                     autoFocus
-                                    className="bg-transparent w-full focus:outline-none"
+                                    className="bg-transparent w-full focus:outline-none
+                                    resize-none
+                                    overflow-y-auto
+                                    [&::-webkit-scrollbar]:w-2
+                                    [&::-webkit-scrollbar-track]:bg-transparent
+                                    [&::-webkit-scrollbar-thumb]:bg-orange-500
+                                    [&::-webkit-scrollbar-thumb]:rounded-full
+                                    [&::-webkit-scrollbar-thumb:hover]:bg-orange-400"
                                   />
                                 ) : (
                                   task.text

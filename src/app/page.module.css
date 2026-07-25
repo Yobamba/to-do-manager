@@ -113,7 +113,7 @@
   display: flex;
   gap: 1rem;
   /* padding: 1rem; */
-  width: 100%;
+  width: 90dvw;
   height: 80dvh;
   background-color: #2e201b;
 }
@@ -565,6 +565,7 @@ input:checked + .slider:before {
   display: flex;
   margin: 0 auto;
   align-items: flex-start; /* Added to make columns independent in height */
+  justify-content: center;
 }
 
 .card {

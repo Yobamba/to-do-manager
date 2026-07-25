@@ -278,6 +278,7 @@ export default function Cards() {
                                   minHeight: "50px",
                                   textWrapStyle: "pretty",
                                   overflowWrap: "anywhere",
+                                  whiteSpace: "pre-wrap",
                                   backgroundColor: snapshot.isDragging
                                     ? "#a84832"
                                     : "#6b2f21",

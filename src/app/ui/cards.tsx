@@ -92,6 +92,21 @@ export default function Cards() {
     setColumns(newColumns);
   };
 
+  const handleTaskEdit = (columnId: string, taskId: string) => {
+    const newColumns = { ...columns };
+    const taskIndex = newColumns[columnId].tasks.findIndex(
+      (t) => t.id === taskId,
+    );
+
+    if (taskIndex > -1) {
+      newColumns[columnId].tasks[taskIndex] = {
+        ...newColumns[columnId].tasks[taskIndex],
+        isEditing: true,
+      };
+      setColumns(newColumns);
+    }
+  };
+
   const handleTaskChange = (
     columnId: string,
     taskId: string,
@@ -257,6 +272,12 @@ export default function Cards() {
                               }
                             >
                               Remove Task
+                            </DropdownMenuItem>
+
+                            <DropdownMenuItem
+                              onClick={() => handleTaskEdit(column.id, task.id)}
+                            >
+                              Edit Task
                             </DropdownMenuItem>
                           </DropdownMenuContent>
                           <Draggable

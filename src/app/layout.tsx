@@ -24,7 +24,7 @@ export default function RootLayout({
         />
       </head>
       <body className={roboto.className}>
-        <div className="h-screen w-screen flex flex-col">
+        <div className="min-h-screen w-full flex flex-col">
           <Providers>{children}</Providers>
         </div>{" "}
       </body>

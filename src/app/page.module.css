@@ -3,7 +3,9 @@
   width: 100%;
   height: 100%;
   background-color: #2e201b;
-  padding: 1rem;
+  overflow-x: auto;
+  padding-inline: max(1rem, env(safe-area-inset-left))
+    max(1rem, env(safe-area-inset-right));
 }
 
 .board {
@@ -12,6 +14,9 @@
   /* min-height: calc(100vh - 60px); */
   max-height: 100%;
   position: relative;
+  padding-inline: 0.5rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .column,
@@ -39,6 +44,20 @@
   overflow-y: auto;
   /* max-height: calc(100vh - 200px); */
   padding: 1rem;
+}
+
+.container {
+  min-width: 200px;
+} /* or remove min-width entirely */
+
+/* Make flex children able to shrink and prevent overflow */
+.board,
+.boardWrapper,
+.board > .container,
+.container,
+.column {
+  box-sizing: border-box;
+  min-width: 0 !important;
 }
 
 .columnHeader {

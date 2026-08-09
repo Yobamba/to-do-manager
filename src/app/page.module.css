@@ -103,6 +103,7 @@
 
 .grid {
   display: grid;
+  width: 90%;
   /* max-width: 1400px; */
   margin: 0 auto;
   box-sizing: border-box;
@@ -112,7 +113,7 @@
   display: flex;
   gap: 1rem;
   /* padding: 1rem; */
-  width: 90dvw;
+  width: 100%;
   height: 80dvh;
   background-color: #2e201b;
 }
@@ -597,7 +598,7 @@ input:checked + .slider:before {
     display: flex;
     gap: 1rem;
     padding: 1rem;
-    width: 90dvw;
+    width: 100%;
     height: 80dvh;
     background-color: #2e201b;
   }

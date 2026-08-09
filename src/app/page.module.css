@@ -103,7 +103,6 @@
 
 .grid {
   display: flex;
-  width: 100%;
   max-width: 1400px;
   margin: 0 auto;
   box-sizing: border-box;
@@ -555,38 +554,79 @@ input:checked + .slider:before {
 }
 
 /* Tablet and Smaller Desktop */
-@media (min-width: 701px) and (max-width: 1120px) {
+@media (min-width: 701px) and (max-width: 900px) {
   .grid {
-    grid-template-columns: repeat(2, 50%);
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .grid {
+    display: grid;
+    margin: 0 auto;
+    align-items: flex-start; /* Added to make columns independent in height */
+    justify-content: center;
+  }
+
+  .board {
+    display: flex;
+    gap: 1rem;
+    /* padding: 1rem; */
+    width: 33%;
+    height: 80dvh;
+    background-color: #2e201b;
+  }
+
+  .page {
+    width: 16rem;
+  }
+
+  .container {
+    background: #c75d3a;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 10px;
+    flex: 1;
+    min-width: 16rem;
+    min-height: 285px;
+    /* max-height: 65%; */
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  .board {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    width: 90dvw;
+    height: 80dvh;
+    background-color: #2e201b;
+  }
+
+  .intro {
+    display: none;
+  }
+
+  .card {
+    padding: 1rem 1.2rem;
+    border-radius: var(--border-radius);
+    background: rgba(var(--card-rgb), 0);
+    border: 1px solid rgba(var(--card-border-rgb), 0);
+    transition:
+      background 200ms,
+      border 200ms;
+  }
+
+  .card span {
+    display: inline-block;
+    transition: transform 200ms;
+  }
+
+  .card h2 {
+    font-weight: 600;
+    margin-bottom: 0.7rem;
   }
 }
 
-.grid {
-  display: flex;
-  margin: 0 auto;
-  align-items: flex-start; /* Added to make columns independent in height */
-  justify-content: center;
-}
-
-.card {
-  padding: 1rem 1.2rem;
-  border-radius: var(--border-radius);
-  background: rgba(var(--card-rgb), 0);
-  border: 1px solid rgba(var(--card-border-rgb), 0);
-  transition:
-    background 200ms,
-    border 200ms;
-}
-
-.card span {
-  display: inline-block;
-  transition: transform 200ms;
-}
-
-.card h2 {
-  font-weight: 600;
-  margin-bottom: 0.7rem;
-}
 /* Enable hover only on non-touch devices */
 @media (hover: hover) and (pointer: fine) {
   .card:hover {

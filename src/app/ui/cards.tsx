@@ -221,7 +221,7 @@ export default function Cards() {
           {Object.values(columns).map((column) => (
             <div
               key={column.id}
-              className={`${styles.container} container ${column.id} relative group`}
+              className={`${styles.container} container ${column.id} relative`}
             >
               <div className="relative group">
                 <h4 className={`${styles.taskHeading}`}>

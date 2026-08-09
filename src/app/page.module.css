@@ -102,8 +102,8 @@
 }
 
 .grid {
-  display: flex;
-  max-width: 1400px;
+  display: grid;
+  /* max-width: 1400px; */
   margin: 0 auto;
   box-sizing: border-box;
 }

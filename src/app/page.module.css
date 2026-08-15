@@ -667,6 +667,32 @@ input:checked + .slider:before {
 
 /* Mobile */
 @media (max-width: 700px) {
+  .boardWrapper {
+    height: auto;
+    min-height: 100dvh;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-inline: 0.5rem;
+  }
+
+  .board {
+    height: auto;
+    min-height: 0;
+    width: max-content;
+    min-width: 100%;
+    padding: 0.5rem 0;
+  }
+
+  .column {
+    min-width: 80vw;
+    flex: 0 0 80vw;
+  }
+
+  .columnContent {
+    max-height: calc(100dvh - 220px);
+    overflow-y: auto;
+  }
+
   .grid {
     grid-template-columns: 1fr;
     margin-bottom: 120px;

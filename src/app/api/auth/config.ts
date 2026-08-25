@@ -1,7 +1,7 @@
-import { AuthOptions } from 'next-auth';
-import GoogleProvider from 'next-auth/providers/google';
-import { JWT } from 'next-auth/jwt';
-import { Session } from 'next-auth';
+import { AuthOptions } from "next-auth";
+import GoogleProvider from "next-auth/providers/google";
+import { JWT } from "next-auth/jwt";
+import { Session } from "next-auth";
 
 // Extend the built-in session type
 interface ExtendedSession extends Session {
@@ -17,8 +17,18 @@ interface ExtendedToken extends JWT {
   error?: string;
 }
 
-async function refreshAccessToken(token: ExtendedToken): Promise<ExtendedToken> {
+async function refreshAccessToken(
+  token: ExtendedToken,
+): Promise<ExtendedToken> {
   try {
+    // Ensure we have a refresh token before attempting to call Google
+    if (!token.refreshToken) {
+      console.error("No refresh token available for token refresh");
+      return {
+        ...token,
+        error: "NoRefreshToken",
+      };
+    }
     const url =
       "https://oauth2.googleapis.com/token?" +
       new URLSearchParams({
@@ -48,7 +58,7 @@ async function refreshAccessToken(token: ExtendedToken): Promise<ExtendedToken> 
       refreshToken: refreshedTokens.refresh_token ?? token.refreshToken,
     };
   } catch (error) {
-    console.log(error);
+    console.error("Error refreshing access token:", error);
     return {
       ...token,
       error: "RefreshAccessTokenError",
@@ -66,9 +76,10 @@ export const authOptions: AuthOptions = {
           prompt: "consent",
           access_type: "offline",
           response_type: "code",
-          scope: "openid email profile https://www.googleapis.com/auth/calendar.readonly https://www.googleapis.com/auth/calendar.events.readonly"
-        }
-      }
+          scope:
+            "openid email profile https://www.googleapis.com/auth/calendar.readonly https://www.googleapis.com/auth/calendar.events.readonly",
+        },
+      },
     }),
   ],
   callbacks: {
@@ -79,7 +90,9 @@ export const authOptions: AuthOptions = {
           ...token,
           accessToken: account.access_token,
           refreshToken: account.refresh_token,
-          accessTokenExpires: account.expires_at ? account.expires_at * 1000 : 0,
+          accessTokenExpires: account.expires_at
+            ? account.expires_at * 1000
+            : 0,
         };
       }
 
@@ -89,9 +102,23 @@ export const authOptions: AuthOptions = {
       }
 
       // Access token has expired, try to update it
-      return refreshAccessToken(token as ExtendedToken);
+      try {
+        return await refreshAccessToken(token as ExtendedToken);
+      } catch (err) {
+        console.error("JWT callback refresh failed:", err);
+        return {
+          ...token,
+          error: "RefreshAccessTokenError",
+        };
+      }
     },
-    async session({ session, token }: { session: Session; token: JWT }): Promise<ExtendedSession> {
+    async session({
+      session,
+      token,
+    }: {
+      session: Session;
+      token: JWT;
+    }): Promise<ExtendedSession> {
       const extendedToken = token as ExtendedToken;
       return {
         ...session,

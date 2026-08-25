@@ -74,6 +74,14 @@
   border-radius: 5px;
   cursor: grab;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.task:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .task:active {
@@ -324,6 +332,11 @@
   cursor: move;
   width: 100%;
   box-sizing: border-box;
+  transition: transform 0.2s;
+}
+
+.draggable:hover {
+  transform: scale(1.02);
 }
 
 /* Keep the header (h4) fixed at the top */

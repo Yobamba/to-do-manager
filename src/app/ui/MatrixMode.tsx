@@ -280,6 +280,13 @@ export default function MatrixMode() {
     }
   }, [session, matrixMode]);
 
+  // If the session reports a refresh error, trigger re-authentication
+  useEffect(() => {
+    if ((session as any)?.error === "RefreshAccessTokenError") {
+      signIn("google", { callbackUrl: window.location.origin });
+    }
+  }, [session]);
+
   // Render simple tasks for a specific quadrant
   const renderSimpleQuadrantTasks = (quadrant: number) => {
     return tasks

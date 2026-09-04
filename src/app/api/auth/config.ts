@@ -48,6 +48,16 @@ async function refreshAccessToken(
     const refreshedTokens = await response.json();
 
     if (!response.ok) {
+      console.error("Non-OK response refreshing token:", refreshedTokens);
+      // If Google indicates the refresh token is invalid/expired, clear it
+      if (refreshedTokens?.error === "invalid_grant") {
+        return {
+          ...token,
+          error: "RefreshAccessTokenError",
+          refreshToken: undefined,
+        };
+      }
+
       throw refreshedTokens;
     }
 

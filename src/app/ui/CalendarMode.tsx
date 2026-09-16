@@ -220,11 +220,11 @@ export default function CalendarMode() {
         {error && <div className={styles.error}>{error}</div>}
       </div>
 
-      <div className={styles.boardWrapper}>
+      <div className={styles.calendarBoardWrapper}>
         <DragDropContext onDragEnd={onDragEnd}>
-          <div className={styles.board}>
+          <div className={styles.calendarBoard}>
             {["To_Do", "Doing", "Done"].map((status) => (
-              <div key={status} className={styles.column}>
+              <div key={status} className={styles.calendarColumn}>
                 <div className={styles.columnHeader}>
                   {status.replace("_", " ")}
                 </div>
@@ -233,7 +233,7 @@ export default function CalendarMode() {
                     <div
                       ref={provided.innerRef}
                       {...provided.droppableProps}
-                      className={styles.columnContent}
+                      className={styles.calendarColumnContent}
                     >
                       {loading ? (
                         <div className={styles.loading}>Loading tasks...</div>

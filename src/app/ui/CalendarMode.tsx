@@ -166,12 +166,20 @@ export default function CalendarMode() {
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          className={`${styles.task} ${snapshot.isDragging ? styles.dragging : ""}`}
+          className={`${styles.task} ${snapshot.isDragging ? styles.dragging : ""} bg-transparent w-full focus:outline-none
+                                    resize-none
+                                    overflow-y-auto
+                                    [&::-webkit-scrollbar]:w-2
+                                    [&::-webkit-scrollbar-track]:bg-transparent
+                                    [&::-webkit-scrollbar-thumb]:bg-orange-500
+                                    [&::-webkit-scrollbar-thumb]:rounded-full
+                                    [&::-webkit-scrollbar-thumb:hover]:bg-orange-400`}
           style={{
             ...provided.draggableProps.style,
             backgroundColor: task.backgroundColor || "#c75d3a",
             color: task.foregroundColor || "#FFFFFF",
           }}
+          autoFocus
         >
           <div className={styles.taskText}>{task.text}</div>
           {task.dueDate && (

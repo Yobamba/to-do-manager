@@ -641,6 +641,7 @@ input:checked + .slider:before {
     background: #c75d3a;
     border-radius: 12px;
     padding: 20px;
+    margin: 10px;
     flex: 1;
     min-width: 16rem;
     min-height: 285px;
@@ -800,6 +801,7 @@ input:checked + .slider:before {
   background-color: #c75d3a;
   padding: 1rem;
   border-radius: 10px;
+  margin: 10px;
 }
 
 .calendarColumnContent {
